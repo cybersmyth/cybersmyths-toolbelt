@@ -1,0 +1,9 @@
+function save-keeper ($name) {
+    $keeper=Get-History | select-object -Last 1 -ExpandProperty CommandLine
+    if ($name -eq "") {
+      write-output $keeper | Out-File -append ~/keeper.txt
+    } else {
+      $keeperfunc="function $name {`n$keeper`n}"
+      write-output $keeperfunc | Out-File -append ~/keeper.txt
+    }
+}
