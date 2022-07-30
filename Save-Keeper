@@ -1,10 +1,18 @@
-function save-keeper ($name="",$context=1,[switch]$ShowDateTime=$false,$keeperFile="~/keeper.txt",[switch]$debug=$false) {
+function save-keeper ($name="",$context=1,[switch]$ShowDateTime=$false,$keeperFile="~/keeper.txt",[switch]$debug=$false,[switch]$UserContext=$false,$Description="") {
 
     if ($debug) {write-output "function is '$name', context is $context, ShowDateTime is $ShowDateTime, file is '$keeperFile'"}
     if ($ShowDateTime) {
 	$theDate=get-date
 	Write-Output $theDate | Out-File -append $keeperFile
     }
+    if ($UserContext) {
+	Write-Output "User=$env:UserName Computer=$env:ComputerName" | Out-File -append $keeperFile
+    }
+    if ($description -ne "")
+    {
+        Write-Output "Description: $Description" | Out-File -append $keeperFile
+    }
+
     $keeper=Get-History | select-object -Last $context -ExpandProperty CommandLine
     if ($name -eq "") {
       write-output $keeper | Out-File -append $keeperFile
