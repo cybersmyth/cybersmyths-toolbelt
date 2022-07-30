@@ -10,6 +10,6 @@ function save-keeper ($name="",$context=1,[switch]$ShowDateTime=$false,$keeperFi
       write-output $keeper | Out-File -append $keeperFile
     } else {
       $keeperfunc="function $name {`n$keeper`n}"
-      write-output $keeperfunc | Out-File -append ~/keeper.txt
+      write-output $keeperfunc | Out-File -append $keeperFile
     }
 }
